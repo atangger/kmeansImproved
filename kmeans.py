@@ -6,7 +6,8 @@ def loadDataSet(fileName):
     for line in fr.readlines():
         curLine = line.strip().split(' ')
         print(curLine)
-        fltLine = [float(curLine[0]),float(curLine[1])]
+        fltLine = [float(x) for x in curLine]
+        print(fltLine)
         dataMat.append(fltLine)
     return dataMat
     
@@ -24,15 +25,25 @@ def randCent(dataSet, k):
         while(records[randid] == 1):
             randid = random.randint(0,n)
         records[randid] = 1
-        centeroids.append([dataSet[randid][0],dataSet[randid][1]])
-        nums+=1
+        print("in randCent")
+        flagMult = False
+        for i in range(len(centeroids)):
+            if distEclud(dataSet[randid],centeroids[i]) == 0:
+                flagMult =True
+        if not flagMult:
+            centeroids.append(dataSet[randid])
+            nums+=1
     centeroids = array(centeroids)
     return centeroids
     
 def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
     n = shape(dataSet)[0]
+    print("NOW dataset = ")
+    print(dataSet)
     clusterAssment = [0]*n                
     centroids = createCent(dataSet, k)
+    print("init center:")
+    print(centroids)
     clusterChanged = True
     while clusterChanged:
         clusterChanged = False
@@ -48,7 +59,7 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
             clusterAssment[i] = minIndex
 
         for cent in range(k):
-           mean = array([0.0,0.0])
+           mean = zeros(shape(dataSet)[1])
            nums = 0
            for i in range(n):
                 if(clusterAssment[i] == cent):
@@ -60,6 +71,7 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
     
 def show(dataSet, k, centroids, clusterAssment):
     from matplotlib import pyplot as plt  
+    plt.figure(1)
     numSamples = dataSet.shape[0]  
     mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']  
     for i in range(numSamples):  
@@ -69,12 +81,26 @@ def show(dataSet, k, centroids, clusterAssment):
     for i in range(k):  
         plt.plot(centroids[i, 0], centroids[i, 1], mark[i], markersize = 12)  
     plt.show()
+
+def showOnlyPoints(dataSet, k, clusterAssment):
+    from matplotlib import pyplot as plt  
+    plt.figure(2)
+    numSamples = dataSet.shape[0]  
+    mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']  
+    for i in range(numSamples):  
+        markIndex = int(clusterAssment[i])  
+        plt.plot(dataSet[i, 0], dataSet[i, 1], mark[markIndex])  
+    plt.show()
       
 def main():
+    k = 3
     dataMat = array(loadDataSet('data.txt'))
-    myCentroids, clustAssing = kMeans(dataMat,4)
-    rint(myCentroids)
-    show(dataMat, 4, myCentroids, clustAssing)  
+    dataTransformed = array(loadDataSet('transformed.txt'))
+    # print(dataTransformed)
+    # myCentroids, clustAssing = kMeans(dataMat,k)
+    transedMyCenterIds, transedClustAssing = kMeans(dataTransformed,k)
+    # show(dataMat,k,myCentroids,clustAssing)
+    showOnlyPoints(dataMat, k, transedClustAssing)  
     
     
 if __name__ == '__main__':
