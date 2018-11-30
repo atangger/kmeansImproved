@@ -16,7 +16,7 @@ def distEclud(vecA, vecB):
 
 def main():
     dataMat = np.array(loadDataSet('data.txt'))
-    transformedData = transform(dataMat,5)
+    transformedData = transform(dataMat,5,3)
 
 
 def findGraph(dataset,r):
@@ -35,7 +35,7 @@ def findGraph(dataset,r):
         D[i][i] = np.sum(W[i,:])
     return D,W
 
-def transform(dataset,r):
+def transform(dataset,r,k):
     D,W = findGraph(dataset,r)
     L = D - W   
     eigenValues, eigenVectors = np.linalg.eig(L)
@@ -43,7 +43,7 @@ def transform(dataset,r):
     eigenValues = eigenValues[idx]
     eigenVectors = eigenVectors[:,idx]
     print(eigenValues)
-    kthEigeVecs = eigenVectors[:,0:10-1]
+    kthEigeVecs = eigenVectors[:,0:k]
     print(kthEigeVecs.shape)
     print(idx)
     of = open("transformed.txt","w")
