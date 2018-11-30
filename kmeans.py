@@ -93,14 +93,15 @@ def showOnlyPoints(dataSet, k, clusterAssment):
     plt.show()
       
 def main():
-    k = 3
-    dataMat = array(loadDataSet('data.txt'))
-    dataTransformed = array(loadDataSet('transformed.txt'))
-    # print(dataTransformed)
-    # myCentroids, clustAssing = kMeans(dataMat,k)
+    k = 2
+    dataMat = array(loadDataSet('dataCircle.txt'))
+    dataTransformed = array(loadDataSet('transformedCircle.txt'))
+    print(dataTransformed)
     transedMyCenterIds, transedClustAssing = kMeans(dataTransformed,k)
-    # show(dataMat,k,myCentroids,clustAssing)
     showOnlyPoints(dataMat, k, transedClustAssing)  
+    
+    # myCentroids, clustAssing = kMeans(dataMat,k)
+    # show(dataMat,k,myCentroids,clustAssing)
     
     
 if __name__ == '__main__':
