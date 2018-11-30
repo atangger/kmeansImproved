@@ -16,8 +16,8 @@ def distEclud(vecA, vecB):
     return sqrt(sum(power(vecA - vecB, 2)))
 
 def main():
-    dataMat = np.array(loadDataSet('dataCircle.txt'))
-    transformedData = transform(dataMat,5,2)
+    dataMat = np.array(loadDataSet('dataTwoCircle.txt'))
+    transformedData = transform(dataMat,10,2)
 
 
 def findGraph(dataset,r):
@@ -50,7 +50,7 @@ def transform(dataset,r,k):
     kthEigeVecs = eigenVectors[:,0:k]
     print(kthEigeVecs[:,0:k])
     print(idx)
-    of = open("transformedCircle.txt","w")
+    of = open("transformedTwoCircle.txt","w")
     for i in range(kthEigeVecs.shape[0]):
         for j in range(kthEigeVecs.shape[1]):
             of.write("%f "%(kthEigeVecs[i,j]))

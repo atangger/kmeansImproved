@@ -72,6 +72,7 @@ def kMeans(dataSet, k, distMeas=distEclud, createCent=randCent):
 def show(dataSet, k, centroids, clusterAssment):
     from matplotlib import pyplot as plt  
     plt.figure(1)
+    plt.axis("equal")
     numSamples = dataSet.shape[0]  
     mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']  
     for i in range(numSamples):  
@@ -85,6 +86,7 @@ def show(dataSet, k, centroids, clusterAssment):
 def showOnlyPoints(dataSet, k, clusterAssment):
     from matplotlib import pyplot as plt  
     plt.figure(2)
+    plt.axis("equal")
     numSamples = dataSet.shape[0]  
     mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']  
     for i in range(numSamples):  
@@ -94,12 +96,12 @@ def showOnlyPoints(dataSet, k, clusterAssment):
       
 def main():
     k = 2
-    dataMat = array(loadDataSet('dataCircle.txt'))
-    dataTransformed = array(loadDataSet('transformedCircle.txt'))
+    dataMat = array(loadDataSet('dataTwoCircle.txt'))
+    dataTransformed = array(loadDataSet('transformedTwoCircle.txt'))
     print(dataTransformed)
     transedMyCenterIds, transedClustAssing = kMeans(dataTransformed,k)
     showOnlyPoints(dataMat, k, transedClustAssing)  
-    
+
     # myCentroids, clustAssing = kMeans(dataMat,k)
     # show(dataMat,k,myCentroids,clustAssing)
     
